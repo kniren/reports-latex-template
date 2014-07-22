@@ -5,10 +5,10 @@ main:
 	latexmk -outdir="output" -pdf documentation.tex
 
 includes:
-	@($(foreach file,$(wildcard reports/*.tex),echo "\include{`echo $(file) | cut -d "." -f1 `}";)) > includes.tex
+	@($(foreach file, $(wildcard reports/*.tex),echo "\include{`echo $(file) | cut -d "." -f1 `}";)) > includes.tex
 
 clean_aux:
-	@$(foreach file,$(wildcard output/*),  $(if $(filter-out $(file),output/documentation.pdf) , rm -R $(file);))
+	@for file in output/* ; do if [ $$file != output/README ] && [ $$file != output/documentation.pdf ] ; then rm -R $$file ; fi ; done
 
 clean:
 	rm -R output/*

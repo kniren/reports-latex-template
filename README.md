@@ -18,5 +18,4 @@ To remove all files from your output directory:
     make clean
 
 TODO: Update Makefile to generate monthly and yearly reports.
-TODO: Update styling of the reports document.
 TODO: Generate reports titlepage.
