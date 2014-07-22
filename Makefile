@@ -4,10 +4,10 @@ main:
 	@if [ ! -d output/reports ] ; then mkdir output/reports	; fi
 	latexmk -outdir="output" -pdf documentation.tex
 
-include_all:
+include_all: check_reports
 	@($(foreach file, $(wildcard reports/*.tex),echo "\include{`echo $(file) | cut -d "." -f1 `}";)) > includes.tex
 
-yearly: main clear_aux
+yearly: check_reports main clear_aux
 	@if [ -e includes.tex ] ; then \
 		rm includes.tex ; 	       \
 	fi 
@@ -23,7 +23,7 @@ yearly: main clear_aux
 	done
 	@touch includes.tex
 
-monthly: main clear_aux
+monthly: check_reports main clear_aux
 	@if [ -e includes.tex ] ; then \
 		rm includes.tex ; 	       \
 	fi 
@@ -49,6 +49,11 @@ clean_aux:
 		rm -R $$file ; 								\
 		fi ; 										\
 	done
+
+check_reports:
+ifeq ($(shell find reports -maxdepth 1 -name "*.tex" ),)
+	$(error No reports found)
+endif
 
 clean:
 	rm -R output/*
