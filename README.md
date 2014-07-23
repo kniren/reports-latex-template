@@ -17,4 +17,3 @@ To remove all files from your output directory:
 
     make clean
 
-TODO: Generate reports titlepage.

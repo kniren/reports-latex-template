@@ -9,14 +9,15 @@
 \RequirePackage[utf8]{inputenc}		% Set encoding to UTF-8
 \RequirePackage{setspace}		    % Allows paragraph spacing
 \RequirePackage{subcaption}         % Allows subcations
-\RequirePackage{titlesec}           % Allows title formatting
+\RequirePackage{url}                % Support for url commands
+    \RequirePackage{titlesec}           % Allows title formatting
 \RequirePackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
 \RequirePackage{cleveref}           % Better references
 
 % Formatting the section style
 \titleformat{\section}
     {\Large\scshape\center}
-    {}{1em}
+    {}{0em}
     {\hrule}
     [\titlerule]
   
@@ -26,7 +27,7 @@
     {}
 
  \titleformat{\subsubsection}
-    {\normalsize\scshape\center}
+    {\small\scshape\center}
     {}{0em}
     {}
 
