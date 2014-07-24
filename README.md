@@ -1,8 +1,9 @@
-Documentation Repository
-========================
+LaTeX Documentation Template
+============================
 
 The recommended way of working with this template is to use a plain
-text editor and the make program to compile your LaTeX files.
+text editor and the make program to compile your LaTeX files.  All the
+documentation should follow these directrices:
 
 
 Installation
@@ -47,6 +48,10 @@ To include all the reports that belongs to the current month:
 To include all the reports that belongs to the current year:
 
     make year
+
+To generate a document with the reports of a specific date:
+
+    make date DATE=YYYY-MM-DD
 
 To remove all generated files in the output directory:
 

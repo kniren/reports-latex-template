@@ -1,6 +1,8 @@
+DATE=$(shell date -jnu +"%Y-%m-%d")
+
 all: today main clean_aux
 
-monitor: today main
+monitor: check_reports date main
 
 total: include_all main clean_aux
 	
@@ -11,10 +13,35 @@ main:
 include_all: check_reports
 	@($(foreach file, $(wildcard reports/*.tex),echo "\include{`echo $(file) | cut -d "." -f1 `}";)) > includes.tex
 
+date: check_reports
+	@if [ -e includes.tex ] ; then \
+		rm includes.tex ; 	       \
+	fi 
+	@touch includes.tex
+	@if [ -n $(DATE) ] ; then \
+	 for file in reports/* ; do 									   \
+		DOCYEAR=$$(echo $$file 	| cut -d "/" -f2 | cut -d "-" -f1 )	;  \
+		LOCYEAR=$$(echo $(DATE) 	         	 | cut -d "-" -f1 ) ;  \
+		DOCMONTH=$$(echo $$file | cut -d "/" -f2 | cut -d "-" -f2 )	;  \
+		LOCMONTH=$$(echo $(DATE) 	         	 | cut -d "-" -f2 ) ;  \
+		DOCDAY=$$(echo $$file 	| cut -d "/" -f2 | cut -d "-" -f3 )	;  \
+		LOCDAY=$$(echo $(DATE) 	         	 	 | cut -d "-" -f3 ) ;  \
+		if [ $$DOCYEAR  = $$LOCYEAR  ] &&     						   \
+		   [ $$DOCMONTH = $$LOCMONTH ] &&	  						   \
+		   [ $$DOCDAY   = $$LOCDAY   ] ; 							   \
+		then 														   \
+			echo \\include{reports/`echo $$file    |				   \
+						   			cut -d "/" -f2 | 				   \
+		 							cut -d "." -f1`} >> includes.tex ; \
+		fi ; 														   \
+	done ; \
+    fi
+
 yearly: check_reports main clean_aux
 	@if [ -e includes.tex ] ; then \
 		rm includes.tex ; 	       \
 	fi 
+	@touch includes.tex
 	@for file in reports/* ; do 									   \
 		DOCYEAR=$$(echo $$file 	| cut -d "/" -f2 | cut -d "-" -f1 )	;  \
 		LOCYEAR=$$(date -jnu +"%Y-%m-%d" 		 | cut -d "-" -f1 ) ;  \
@@ -25,12 +52,12 @@ yearly: check_reports main clean_aux
 		 							cut -d "." -f1`} >> includes.tex ; \
 		fi ; 														   \
 	done
-	@touch includes.tex
 
 monthly: check_reports main clean_aux
 	@if [ -e includes.tex ] ; then \
 		rm includes.tex ; 	       \
 	fi 
+	@touch includes.tex
 	@for file in reports/* ; do 									   \
 		DOCYEAR=$$(echo $$file 	| cut -d "/" -f2 | cut -d "-" -f1 )	;  \
 		LOCYEAR=$$(date -jnu +"%Y-%m-%d" 		 | cut -d "-" -f1 ) ;  \
@@ -43,29 +70,8 @@ monthly: check_reports main clean_aux
 		 							cut -d "." -f1`} >> includes.tex ; \
 		fi ; 														   \
 	done
-	@touch includes.tex
 
-today: check_reports main
-	@if [ -e includes.tex ] ; then \
-		rm includes.tex ; 	       \
-	fi 
-	@for file in reports/* ; do 									   \
-		DOCYEAR=$$(echo $$file 	| cut -d "/" -f2 | cut -d "-" -f1 )	;  \
-		LOCYEAR=$$(date -jnu +"%Y-%m-%d" 		 | cut -d "-" -f1 ) ;  \
-		DOCMONTH=$$(echo $$file | cut -d "/" -f2 | cut -d "-" -f2 )	;  \
-		LOCMONTH=$$(date -jnu +"%Y-%m-%d" 		 | cut -d "-" -f2 ) ;  \
-		DOCDAY=$$(echo $$file 	| cut -d "/" -f2 | cut -d "-" -f3 )	;  \
-		LOCDAY=$$(date -jnu +"%Y-%m-%d" 		 | cut -d "-" -f3 ) ;  \
-		if [ $$DOCYEAR 	= $$LOCYEAR  ] 							       \
-		&& [ $$DOCMONTH = $$LOCMONTH ]  							   \
-		&& [ $$DOCDAY 	= $$LOCDAY   ];								   \
-		then 														   \
-			echo \\include{reports/`echo $$file    |				   \
-						   			cut -d "/" -f2 | 				   \
-		 							cut -d "." -f1`} >> includes.tex ; \
-		fi ; 														   \
-	done
-	@touch includes.tex
+today: date check_reports main
  
 clean_aux:
 	@for file in output/* ; do 						\
