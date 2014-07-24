@@ -63,10 +63,14 @@ Directrices
 
 1. Write the reports following this naming structure `reports/YYYY-MM-DD-name.tex`.
 2. Use the YYYY--MM--DD format for the main section of the document.
-3. Write each sentence on a separate line so that we can version
+3. After the main section use the command `\Author{name}{email}` to
+   introduce your personal information. Notice that the command is
+   capitalized.
+4. Write each sentence on a separate line so that we can version
    control the documentation more effectively.
 
         \section{YYYY--MM--DD} 
+        \Author{name}{email}
 
         This sentence and the one bellow.
         Will be interpreted as a paragraph.
@@ -74,4 +78,4 @@ Directrices
         This is a new paragraph.
         ...
 
-4. Commit often, push periodically.
+5. Commit often, push periodically.

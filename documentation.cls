@@ -40,3 +40,6 @@
 \doublespacing
 \graphicspath{{figures/}}
 \pagestyle{plain}
+
+% New commands definitions
+\newcommand{\Author}[2]{\noindent\scriptsize\textsc{#1\hfill$<$#2$>$}\normalsize\\ }
