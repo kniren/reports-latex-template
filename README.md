@@ -47,11 +47,11 @@ To include all the reports that belongs to the current month:
 
 To include all the reports that belongs to the current year:
 
-    make year
+    make yearly
 
 To generate a document with the reports of a specific date:
 
-    make date DATE=YYYY-MM-DD
+    make DATE=YYYY-MM-DD
 
 To remove all generated files in the output directory:
 
