@@ -57,11 +57,11 @@ Directrices
 -----------
 
 1. Write the reports following this naming structure `reports/YYYY-MM-DD-name.tex`.
-2. Use the YYYY-MM-DD format for the main section of the document.
+2. Use the YYYY--MM--DD format for the main section of the document.
 3. Write each sentence on a separate line so that we can version
    control the documentation more effectively.
 
-        \section{YYYY-MM-DD} 
+        \section{YYYY--MM--DD} 
 
         This sentence and the one bellow.
         Will be interpreted as a paragraph.

@@ -10,7 +10,7 @@
 \RequirePackage{setspace}		    % Allows paragraph spacing
 \RequirePackage{subcaption}         % Allows subcations
 \RequirePackage{url}                % Support for url commands
-    \RequirePackage{titlesec}           % Allows title formatting
+\RequirePackage{titlesec}           % Allows title formatting
 \RequirePackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
 \RequirePackage{cleveref}           % Better references
 
@@ -38,5 +38,5 @@
 
 % Setting document options
 \doublespacing
-\graphicspath{figures/}
+\graphicspath{{figures/}}
 \pagestyle{plain}
