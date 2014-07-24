@@ -75,6 +75,13 @@ clean_aux:
 		rm -R $$file ; 								\
 		fi ; 										\
 	done
+	@for file in figures/* ; do						\
+		if [ $$file != figures/README ] && 			\
+		[ `echo $$file | cut -d "." -f2` = pdf ] ;  \
+		   then 									\
+		rm -R $$file ; 								\
+		fi ; 										\
+	done
 
 check_reports:
 ifeq ($(shell find reports -maxdepth 1 -name "*.tex" ),)
