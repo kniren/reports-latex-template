@@ -1,8 +1,8 @@
 DATE=$(shell date -jnu +"%Y-%m-%d")
 
-all: today main clean_aux
+all: today clean_aux
 
-monitor: check_reports date main
+monitor: date
 
 total: include_all main clean_aux
 	
@@ -13,7 +13,7 @@ main:
 include_all: check_reports
 	@($(foreach file, $(wildcard reports/*.tex),echo "\include{`echo $(file) | cut -d "." -f1 `}";)) > includes.tex
 
-date: check_reports
+date: check_reports main
 	@if [ -e includes.tex ] ; then \
 		rm includes.tex ; 	       \
 	fi 
@@ -71,7 +71,7 @@ monthly: check_reports main clean_aux
 		fi ; 														   \
 	done
 
-today: date check_reports main
+today: date
  
 clean_aux:
 	@for file in output/* ; do 						\
