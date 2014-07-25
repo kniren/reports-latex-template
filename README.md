@@ -37,6 +37,11 @@ on the document changes:
 
     make monitor 
 
+This will compile only your own document. To compile from another
+branch use:
+
+    make monitor BRANCH=name
+
 To generate a document containing all the reports:
 
     make total

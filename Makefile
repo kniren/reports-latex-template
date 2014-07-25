@@ -1,8 +1,9 @@
 DATE=$(shell date -jnu +"%Y-%m-%d")
+BRANCH=$(shell git branch | grep \* | cut -d '*' -f2 | tr -d ' ')
 
 all: include_today main clean_aux
 
-monitor: include_today main
+monitor: include_monitor main
 
 total: include_all main clean_aux
 
@@ -74,6 +75,33 @@ include_today: check_reports
 		fi ; 														   \
 	done ; \
     fi
+
+include_monitor: check_reports check_branch
+	@if [ -e includes.tex ] ; then \
+		rm includes.tex ; 	       \
+	fi 
+	@touch includes.tex
+	@if [ -n $(DATE) ] ; then \
+	 for file in reports/* ; do 									   \
+		DOCYEAR=$$(echo $$file 	| cut -d "/" -f2 | cut -d "-" -f1 )	;  \
+		LOCYEAR=$$(echo $(DATE) 	         	 | cut -d "-" -f1 ) ;  \
+		DOCMONTH=$$(echo $$file | cut -d "/" -f2 | cut -d "-" -f2 )	;  \
+		LOCMONTH=$$(echo $(DATE) 	         	 | cut -d "-" -f2 ) ;  \
+		DOCDAY=$$(echo $$file 	| cut -d "/" -f2 | cut -d "-" -f3 )	;  \
+		LOCDAY=$$(echo $(DATE) 	         	 	 | cut -d "-" -f3 ) ;  \
+		DOCUSR=$$(echo $$file 	| cut -d "/" -f2 | cut -d "-" -f4      \
+												 | cut -d "." -f1)	;  \
+		if [ $$DOCYEAR  = $$LOCYEAR  ] &&     						   \
+		   [ $$DOCMONTH = $$LOCMONTH ] &&	  						   \
+		   [ $$DOCDAY   = $$LOCDAY   ] &&							   \
+		   [ $$DOCUSR   = $(BRANCH)  ] ; 							   \
+		then 														   \
+			echo \\include{reports/`echo $$file    |				   \
+						   			cut -d "/" -f2 | 				   \
+		 							cut -d "." -f1`} >> includes.tex ; \
+		fi ; 														   \
+	done ; \
+    fi
  
 clean_aux:
 	@for file in output/* ; do 						\
@@ -102,4 +130,9 @@ clean:
 check_reports:
 ifeq ($(shell find reports -maxdepth 1 -name "*.tex" ),)
 	$(error No reports found)
+endif
+
+check_branch:
+ifneq ($(shell ls reports | grep $(BRANCH) -o -m 1),$(BRANCH))
+	$(error No reports from the branch: $(BRANCH))
 endif
