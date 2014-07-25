@@ -4,7 +4,7 @@
 
 % Loading Packages
 \RequirePackage{amsmath}            % Better math environment
-\RequirePackage{booktabs}           % Better tables
+\RequirePackage{array,booktabs}     % Better tables
 \RequirePackage{graphicx}			% Allows graphics loading
 \RequirePackage[utf8]{inputenc}		% Set encoding to UTF-8
 \RequirePackage{setspace}		    % Allows paragraph spacing
